@@ -54,22 +54,24 @@ def prepareMessage() {
 
 	def message = ""
 	if (issues.size() > 0) {
-		message += "There are ${issues.size()} open PRs ($prsInProgress in progress and ${issues.size() - prsInProgress} in QA)"
+		message += "There are *${issues.size()} open PRs* (*$prsInProgress in progress* and ${issues.size() - prsInProgress} in QA)"
 		if (prsWithNotEnoughReviewers != "") {
-			message += "\n\nNot enough reviewers:" + prsWithNotEnoughReviewers
+			message += "\n\n>*Not enough reviewers:*" + prsWithNotEnoughReviewers
 		}
 		if (approvedWithoutQALabel != "") {
-			message += "\n\nApproved without QA label:" + approvedWithoutQALabel
+			message += "\n\n>*Approved without QA label:*" + approvedWithoutQALabel
 		}
 		if (missingJiraTicket != "") {
-			message += "\n\nMissing JIRA ticket:" + missingJiraTicket
+			message += "\n\n>*Missing JIRA ticket:*" + missingJiraTicket
 		}
+
+		message += "@here :point_up:"
 	}
 }
 
 def hasMissingJiraTicket(Issue issue) {
 	if ((issue.body =~ /([a-zA-Z]+-[0-9]+)/).getCount() == 0) {
-		return "\n• $issue.number: ${formatIssueTitle(issue.title)} | ${users[issue.author]}"
+		return formatMessage(issue, users[issue.author])
 	}
 	return ""
 }
@@ -90,7 +92,7 @@ def hasApprovedWithoutQALabel(Issue issue) {
 	}
 	
 	if (approved && issue.requestedReviewers.size() == 0 && !issue.labels.contains("QA")) {
-		return "\n• $issue\n.number: ${formatIssueTitle(issue.title)} | ${users[issue.author]}"
+		return formatMessage(issue, users[issue.author])
 	}
 	return ""
 }
@@ -104,7 +106,7 @@ def hasNotEnoughReviewers(Issue issue) {
 		issue.requestedReviewers.each {
 			reviewers += "${users[it]} "
 		}
-		return "\n• $issue.number: ${formatIssueTitle(issue.title)} | " + (reviewers != "" ? reviewers : "no reviewers")
+		return formatMessage(issue, (reviewers != "" ? reviewers : "no reviewers"))
 	}
 	return ""
 }
@@ -158,6 +160,10 @@ def getReviews(int issueNumber) {
 	return reviewersMap
 }
 
+def formatMessage(Issue issue, String user) {
+	return "\n>• <https://github.com/ClearScore/caesium-android-v2/pull/$issue.number|$issue.number: ${formatIssueTitle(issue.title).padRight(21, "*")}> | ${user}"
+}
+
 def formatIssueTitle(String title) {
-	return title.substring(0, Math.min(title.length(), 15)) + "..."
+	return title.substring(0, Math.min(title.length(), 20)) + "&hellip;"
 }
