@@ -161,9 +161,9 @@ def getReviews(int issueNumber) {
 }
 
 def formatMessage(Issue issue, String user) {
-	return "\n>• <https://github.com/ClearScore/caesium-android-v2/pull/$issue.number|$issue.number: ${formatIssueTitle(issue.title).padRight(21, "*")}> | ${user}"
+	return "\n>• <https://github.com/ClearScore/caesium-android-v2/pull/$issue.number|$issue.number: ${formatIssueTitle(issue.title).padRight(23, " ")}> | ${user}"
 }
 
 def formatIssueTitle(String title) {
-	return title.substring(0, Math.min(title.length(), 20)) + "&hellip;"
+	return title.substring(0, Math.min(title.length(), 20)) + "..."
 }
