@@ -65,7 +65,7 @@ def prepareMessage() {
 			message += "\n\n>*Missing JIRA ticket:*" + missingJiraTicket
 		}
 
-		message += "\n\n@here :point_up:"
+		message += "\n\n@here :point_up::point_up::point_up:"
 	}
 }
 
@@ -161,7 +161,7 @@ def getReviews(int issueNumber) {
 }
 
 def formatMessage(Issue issue, String user) {
-	return "\n>• <https://github.com/ClearScore/caesium-android-v2/pull/$issue.number|$issue.number>\t|\t${user}"
+	return "\n>• <https://github.com/ClearScore/caesium-android-v2/pull/$issue.number|$issue.number> | ${user}"
 }
 
 def formatIssueTitle(String title) {
