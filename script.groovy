@@ -3,9 +3,6 @@ import groovy.json.JsonSlurper
 import java.util.regex.Pattern
 import java.util.regex.Matcher
 
-baseUrl = ""
-token = ""
-
 users = ["jordanterry":"@jordan_terry",
 "tomkricensky":"@tomas.kricensky",
 "MarcinLament":"@marcin",
@@ -40,8 +37,9 @@ class Issue {
 	}
 }
 
-baseUrl = args[0]
-token = args[1]
+githubUser = args[0]
+githubRepo = args[1]
+token = args[2]
 
 def message = prepareMessage()
 println message
@@ -168,7 +166,7 @@ def getReviews(int issueNumber) {
 }
 
 def formatMessage(Issue issue, String user) {
-	return "\n>• <https://github.com/ClearScore/caesium-android-v2/pull/$issue.number|$issue.number> | ${user}"
+	return "\n>• <https://github.com/$githubUser/$githubRepo/pull/$issue.number|$issue.number> | ${user}"
 }
 
 def formatIssueTitle(String title) {
