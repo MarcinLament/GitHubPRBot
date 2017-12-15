@@ -122,7 +122,7 @@ def isPRInProgress(Issue issue) {
 
 def getIssues() {
 	def header = [Authorization: 'token ' + token]
-	def url = baseUrl + "issues?per_page=100"
+	def url = getBaseUrl() + "issues?per_page=100"
 
 	def json = url.toURL().getText(requestProperties: header)
 	def jsonSlurper = new JsonSlurper()
@@ -152,7 +152,7 @@ def getIssues() {
 
 def getReviews(int issueNumber) {
 	def header = [Authorization: 'token ' + token]
-	def url = baseUrl + "pulls/$issueNumber/reviews?per_page=100"
+	def url = getBaseUrl() + "pulls/$issueNumber/reviews?per_page=100"
 
 	def json = url.toURL().getText(requestProperties: header)
 	def jsonSlurper = new JsonSlurper()
@@ -171,4 +171,8 @@ def formatMessage(Issue issue, String user) {
 
 def formatIssueTitle(String title) {
 	return title.substring(0, Math.min(title.length(), 20)) + "..."
+}
+
+def getBaseUrl() {
+	return "https://api.github.com/repos/$githubUser/$githubRepo/"
 }
