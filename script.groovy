@@ -11,7 +11,14 @@ users = ["jordanterry":"@jordan_terry",
 "MarcinLament":"@marcin",
 "AnkisCZ":"@lukas",
 "Vanamas":"@vanamas",
-"MatejVancik":"@matej"]
+"MatejVancik":"@matej",
+"joamafer":"@jose",
+"miighty":"@ricardo",
+"johnpatrickmorgan":"@johnmorgan",
+"Bukmop":"@viktor",
+"davidkrulich":"@david.krulich",
+"maturada":"@david",
+"radeknovis":"@rnovak"]
 
 class Issue {
 	Integer number
