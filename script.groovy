@@ -103,7 +103,7 @@ def hasApprovedWithoutQALabel(Issue issue) {
 }
 
 def hasNotEnoughReviewers(Issue issue) {
-	if (issue.reviews.size() + issue.requestedReviewers.size() < 2) {
+	if ((issue.reviews.size() + issue.requestedReviewers.size() < 2) && !isWIP(issue)) {
 		def reviewers = ""
 		issue.reviews.each { key, value ->
 			reviewers += "${users[key]} "
@@ -118,6 +118,10 @@ def hasNotEnoughReviewers(Issue issue) {
 
 def isPRInProgress(Issue issue) {
 	return !issue.labels.contains("QA") ? 1 : 0
+}
+
+def isWIP(Issue issue) {
+	return !issue.labels.contains("WIP") ? 1 : 0
 }
 
 def getIssues() {
