@@ -121,7 +121,7 @@ def isPRInProgress(Issue issue) {
 }
 
 def isWIP(Issue issue) {
-	return !issue.labels.contains("WIP") ? 1 : 0
+	return issue.labels.contains("WIP") ? 1 : 0
 }
 
 def getIssues() {
