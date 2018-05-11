@@ -15,9 +15,9 @@ users = ["jordanterry":"@jordan_terry",
 "Bukmop":"@viktor",
 "davidkrulich":"@david.krulich",
 "maturada":"@david",
-"radeknovis":"@rnovak"
-"SarahFuke":"@sarah.fuke"
-"lukstsm":"@marcis.luksts"
+"radeknovis":"@rnovak",
+"SarahFuke":"@sarah.fuke",
+"lukstsm":"@marcis.luksts",
 "enricclearscore":"@enric.requena"]
 
 class Issue {
