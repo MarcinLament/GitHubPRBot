@@ -64,8 +64,8 @@ def prepareMessage() {
 
 def hasMissingJiraTicket(Issue issue) {
 	if ((issue.body =~ /([a-zA-Z]+-[0-9]+)/).getCount() == 0) {
-		def user = (users[issue.author] != null) ? users[issue.author] : issue.author
-		return formatMessage(issue, user.toString())
+		//def user = (users[issue.author] != null) ? users[issue.author] : issue.author
+		return formatMessage(issue, mapUser(issue.author))
 	}
 	return ""
 }
@@ -86,10 +86,15 @@ def hasApprovedWithoutQALabel(Issue issue) {
 	}
 	
 	if (approved && issue.requestedReviewers.size() == 0 && !issue.labels.contains("QA")) {
-		String user = (users[issue.author] != null) ? users[issue.author] : issue.author
-		return formatMessage(issue, user)
+		//String user = (users[issue.author] != null) ? users[issue.author] : issue.author
+		return formatMessage(issue, mapUser(issue.author))
 	}
 	return ""
+}
+
+def mapUser(String key) {
+	String user = (users[key] != null) ? users[key] : key
+	return user
 }
 
 def hasNotEnoughReviewers(Issue issue) {
