@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 import java.util.regex.Pattern
 import java.util.regex.Matcher
 
-users = []
+users = ["":""]
 
 class Issue {
 	Integer number
