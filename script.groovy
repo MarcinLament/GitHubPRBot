@@ -93,8 +93,9 @@ def hasApprovedWithoutQALabel(Issue issue) {
 }
 
 def mapUser(String key) {
-	if (users[key] != null && users[key] != "") {
-		return users[key]
+	String user = users[key]
+	if (user?.trim()) {
+		return user
 	}
 	return key
 }
