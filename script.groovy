@@ -86,7 +86,7 @@ def hasApprovedWithoutQALabel(Issue issue) {
 	}
 	
 	if (approved && issue.requestedReviewers.size() == 0 && !issue.labels.contains("QA")) {
-		String user = users[issue.author]
+		String user = (users[issue.author] != null) ? users[issue.author] : issue.author
 		return formatMessage(issue, user)
 	}
 	return ""
