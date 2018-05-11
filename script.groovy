@@ -93,8 +93,10 @@ def hasApprovedWithoutQALabel(Issue issue) {
 }
 
 def mapUser(String key) {
-	String user = (users[key] != null) ? users[key] : key
-	return user
+	if (users[key] != null && users[key] != "") {
+		return users[key]
+	}
+	return key
 }
 
 def hasNotEnoughReviewers(Issue issue) {
