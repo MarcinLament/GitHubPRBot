@@ -3,19 +3,7 @@ import groovy.json.JsonSlurper
 import java.util.regex.Pattern
 import java.util.regex.Matcher
 
-users = ["jordanterry":"@jordan_terry",
-"tomkricensky":"@tomas.kricensky",
-"MarcinLament":"@marcin",
-"AnkisCZ":"@lukas",
-"Vanamas":"@vanamas",
-"MatejVancik":"@matej",
-"joamafer":"@jose",
-"miighty":"@ricardo",
-"johnpatrickmorgan":"@johnmorgan",
-"Bukmop":"@viktor",
-"davidkrulich":"@david.krulich",
-"maturada":"@david",
-"radeknovis":"@rnovak"]
+users = []
 
 class Issue {
 	Integer number
@@ -76,7 +64,8 @@ def prepareMessage() {
 
 def hasMissingJiraTicket(Issue issue) {
 	if ((issue.body =~ /([a-zA-Z]+-[0-9]+)/).getCount() == 0) {
-		return formatMessage(issue, users[issue.author])
+		def user = (users[issue.author] != null) ? users[issue.author] : issue.author
+		return formatMessage(issue, user)
 	}
 	return ""
 }
@@ -97,7 +86,8 @@ def hasApprovedWithoutQALabel(Issue issue) {
 	}
 	
 	if (approved && issue.requestedReviewers.size() == 0 && !issue.labels.contains("QA")) {
-		return formatMessage(issue, users[issue.author])
+		def user = (users[issue.author] != null) ? users[issue.author] : issue.author
+		return formatMessage(issue, user)
 	}
 	return ""
 }
@@ -106,10 +96,12 @@ def hasNotEnoughReviewers(Issue issue) {
 	if ((issue.reviews.size() + issue.requestedReviewers.size() < 2) && !isWIP(issue)) {
 		def reviewers = ""
 		issue.reviews.each { key, value ->
-			reviewers += "${users[key]} "
+			def user = (users[key] != null) ? users[key] : key
+			reviewers += "${user} "
 		}
 		issue.requestedReviewers.each {
-			reviewers += "${users[it]} "
+			def user = (users[it] != null) ? users[it] : it
+			reviewers += "${user} "
 		}
 		return formatMessage(issue, (reviewers != "" ? reviewers : "no reviewers"))
 	}
